@@ -243,7 +243,7 @@ table td:first-child, table th:first-child {
 <h2>SpringMVC初始化流程</h2>
 <ol>
 <li>先看一下SpringMVC类图结构
-<img src="./springmvc-class-image.png" alt="SpringMVC类图" /></li>
+<img src="https://raw.githubusercontent.com/zephyr520/zephyr/master/spring/springmvc-class-image.png" alt="SpringMVC类图" /></li>
 <li>我们知道Servlet在创建的过程中，会调用init()方法，执行一系列的初始化动作，而SpringMVC在初始化过程中，会将初始化的操作委托给子类（HttpServletBean）去执行,而HttpServletBean继承了HTTPServlet,所以它也是一个Servlet,同时它也是FrameworkServlet的父类，FrameworkServlet是DispatchServlet的父类，每一个类都会有自己的初始化动作。</li>
 </ol>
 <h3>HttpServletBean的初始化</h3>
