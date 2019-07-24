@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>springmvc-init-process</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+body{
+    margin: 0 auto;
+    font-family: "ubuntu", "Tahoma", "Microsoft YaHei", arial,sans-serif;
+    color: #444444;
+    line-height: 1;
+    padding: 30px;
+}
+
+img {
+    max-width: 100%;
+}
+@media screen and (min-width: 1000px) {
+    body {
+        width: 842px;
+        margin: 10px auto;
+    }
+
+    
+}
+h1, h2, h3, h4 {
+    color: #111111;
+    font-weight: 400;
+    margin-top: 1em;
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: Georgia, Palatino, serif;
+}
+h1, h2, h3, h4, h5, dl{
+    margin-bottom: 16px;
+    padding: 0;
+}
+
+p {
+    margin-top: 8px;
+    margin-bottom: 3px;
+}
+h1 {
+    font-size: 48px;
+    line-height: 54px;
+}
+h2 {
+    font-size: 36px;
+    line-height: 42px;
+}
+h1, h2 {
+    border-bottom: 1px solid #EFEAEA;
+    padding-bottom: 10px;
+}
+h3 {
+    font-size: 24px;
+    line-height: 30px;
+}
+h4 {
+    font-size: 21px;
+    line-height: 26px;
+}
+h5 {
+    font-size: 18px;
+    line-height: 23px;
+}
+a {
+    color: #0099ff;
+    margin: 0 2px;
+    padding: 0;
+    vertical-align: baseline;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+    color: #ff6600;
+}
+a:visited {
+    /*color: purple;*/
+}
+ul, ol {
+    padding: 0;
+    padding-left: 18px;
+    margin: 0;
+}
+li {
+    line-height: 24px;
+}
+p, ul, ol {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+ol ol, ul ol {
+    list-style-type: lower-roman;
+}
+
+code, pre {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    background-color:#f7f7f7;
+    color: inherit;
+}
+
+code {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    margin: 0 2px;
+}
+
+pre {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    line-height: 1.7em;
+    overflow: auto;
+    padding: 6px 10px;
+    border-left: 5px solid #6CE26C;
+}
+
+pre > code {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    border: 0;
+    display: inline;
+    max-width: initial;
+    padding: 0;
+    margin: 0;
+    overflow: initial;
+    line-height: 1.6em;
+    font-size: .95em;
+    white-space: pre;
+    background: 0 0;
+
+}
+
+code {
+    color: #666555;
+}
+
+aside {
+    display: block;
+    float: right;
+    width: 390px;
+}
+blockquote {
+    border-left:.5em solid #eee;
+    padding: 0 0 0 2em;
+    margin-left:0;
+}
+blockquote  cite {
+    font-size:14px;
+    line-height:20px;
+    color:#bfbfbf;
+}
+blockquote cite:before {
+    content: '\2014 \00A0';
+}
+
+blockquote p {
+    color: #666;
+}
+hr {
+    text-align: left;
+    color: #999;
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+}
+
+dl {
+    padding: 0;
+}
+
+dl dt {
+    padding: 10px 0;
+    margin-top: 16px;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: bold;
+}
+
+dl dd {
+    padding: 0 16px;
+    margin-bottom: 16px;
+}
+
+dd {
+    margin-left: 0;
+}
+
+table {
+    *border-collapse: collapse; /* IE7 and lower */
+    border-spacing: 0;
+    width: 100%;
+}
+table {
+    border: solid #ccc 1px;
+}
+
+table thead {
+    background: #f7f7f7;
+}
+
+table thead tr:hover {
+    background: #f7f7f7
+}
+table tr:hover {
+    background: #fbf8e9;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+}
+table td, .table th {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    border-top: none;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    padding: 5px;
+    border-left: 1px solid #ccc;
+}
+
+table td:first-child, table th:first-child {
+    border-left: none;
+}
+
+</style>
+</head>
+<body>
+<h2>SpringMVC初始化流程</h2>
+<ol>
+<li>先看一下SpringMVC类图结构
+<img src="./springmvc-class-image.png" alt="SpringMVC类图" /></li>
+<li>我们知道Servlet在创建的过程中，会调用init()方法，执行一系列的初始化动作，而SpringMVC在初始化过程中，会将初始化的操作委托给子类（HttpServletBean）去执行,而HttpServletBean继承了HTTPServlet,所以它也是一个Servlet,同时它也是FrameworkServlet的父类，FrameworkServlet是DispatchServlet的父类，每一个类都会有自己的初始化动作。</li>
+</ol>
+<h3>HttpServletBean的初始化</h3>
+<pre><code>public final void init() throws ServletException {
+    if (logger.isDebugEnabled()) {
+        logger.debug(&quot;Initializing servlet '&quot; + getServletName() + &quot;'&quot;);
+    }
+
+    // Set bean properties from init parameters.
+    PropertyValues pvs = new ServletConfigPropertyValues(getServletConfig(), this.requiredProperties);
+    if (!pvs.isEmpty()) {
+        try {
+            BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(this);
+            ResourceLoader resourceLoader = new ServletContextResourceLoader(getServletContext());
+            bw.registerCustomEditor(Resource.class, new ResourceEditor(resourceLoader, getEnvironment()));
+            initBeanWrapper(bw);
+            bw.setPropertyValues(pvs, true);
+        }
+        catch (BeansException ex) {
+            if (logger.isErrorEnabled()) {
+                logger.error(&quot;Failed to set bean properties on servlet '&quot; + getServletName() + &quot;'&quot;, ex);
+            }
+            throw ex;
+        }
+    }
+
+    // 让一些细节的操作留给子类去做它们喜欢的初始化.
+    initServletBean();
+
+    if (logger.isDebugEnabled()) {
+        logger.debug(&quot;Servlet '&quot; + getServletName() + &quot;' configured successfully&quot;);
+    }
+}
+</code></pre>
+<p>HttpServletBean 初始化过程全在 init 方法中定义，它的核心就是创建 <strong>BeanWrapper</strong>。</p>
+<p>通过 BeanWrapper 可以访问到 Servlet 的所有参数、资源加载器加载的资源以及 DispatcherServlet中的所有属性，并且可以像访问 Javabean 一样简单。</p>
+<h3>FrameworkServlet初始化</h3>
+<pre><code>protected final void initServletBean() throws ServletException {
+    // 此处代码省略
+    try {
+        this.webApplicationContext = initWebApplicationContext();
+        initFrameworkServlet();
+    }
+    // 此处代码省略
+}
+</code></pre>
+<pre><code>protected WebApplicationContext initWebApplicationContext() {
+    // 获取rootContext容器
+    WebApplicationContext rootContext =
+            WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+    WebApplicationContext wac = null;
+    // 获取SpringMVC容器
+    if (this.webApplicationContext != null) {
+        wac = this.webApplicationContext;
+        if (wac instanceof ConfigurableWebApplicationContext) {
+            ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) wac;
+            if (!cwac.isActive()) {
+                if (cwac.getParent() == null) {
+                    cwac.setParent(rootContext);
+                }
+                configureAndRefreshWebApplicationContext(cwac);
+            }
+        }
+    }
+    if (wac == null) {
+        wac = findWebApplicationContext();
+    }
+    if (wac == null) {
+        wac = createWebApplicationContext(rootContext);
+    }
+    // 刷新SpringMVC容器
+    if (!this.refreshEventReceived) {
+        // 将具体的刷新操作交给子类实现
+        onRefresh(wac);
+    }
+    // 此处代码省略
+    return wac;
+}
+</code></pre>
+<p>FrameworkServlet在初始化的过程中主要负责其SpringMVC容器的初始化。它取得 Spring根容器的目的是将其设为 SpringMVC 的父容器。</p>
+<h3>DispatchServlet的初始化</h3>
+<pre><code>protected void onRefresh(ApplicationContext context) {
+    initStrategies(context);
+}
+</code></pre>
+<pre><code>protected void initStrategies(ApplicationContext context) {
+    // 初始化多文件上传解析器
+    initMultipartResolver(context);
+    // 初始化区域解析器
+    initLocaleResolver(context);
+    // 初始化主题解析器
+    initThemeResolver(context);
+    // 初始化HandlerMapping
+    initHandlerMappings(context);
+    // 初始化HandlerAdapter
+    initHandlerAdapters(context);
+    // 初始化处理器异常解析器
+    initHandlerExceptionResolvers(context);
+    // 初始化请求到视图的转换器
+    initRequestToViewNameTranslator(context);
+    // 初始化视图解析器
+    initViewResolvers(context);
+    // 初始化Flash映射管理器
+    initFlashMapManager(context);
+}
+</code></pre>
+<p>DispatchServlet在初始化过程中，主要负责初始化各种不同的组件。它好比给 SpringMVC 添加功能模块，一旦功能模块添加完毕，SpringMVC 就可以正常工作。因此 SpringMVC 的初始化工作也到此结束。</p>
+<h4>参考</h4>
+<p><a href="http://objcoding.com/2017/06/14/SpringMVC-initialization-process/">SpringMVC初始化过程</a></p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

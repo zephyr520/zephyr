@@ -8,12 +8,12 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 [Mybatis源码解析](https://zephyr520.github.io/zephyr/mybatis/mybatis.html)
 
 ### SpringMVC工作原理
-[SpringMVC初始化流程](https://zephyr520.github.io/zephyr/spring/springmvc-init-process.md)
+[SpringMVC初始化流程](https://zephyr520.github.io/zephyr/spring/springmvc-init-process.html)
 
-[SpringMVC请求处理流程](https://zephyr520.github.io/zephyr/spring/springmvc-request-process.md)
+[SpringMVC请求处理流程](https://zephyr520.github.io/zephyr/spring/springmvc-request-process.html)
 
 ### Spring
-[SpringIOC的理解](https://zephyr520.github.io/zephyr/spring/spring-ioc-comprehension.md)
+[SpringIOC的理解](https://zephyr520.github.io/zephyr/spring/spring-ioc-comprehension.html)
 
 ### SPI
-[SPI](https://zephyr520.github.io/zephyr/java/java-spi.md)
+[SPI](https://zephyr520.github.io/zephyr/java/java-spi.html)
