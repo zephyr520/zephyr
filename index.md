@@ -20,3 +20,6 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 
 ### SPI
 [SPI](https://zephyr520.github.io/zephyr/java/java-spi.html)
+
+### 音乐
+[音乐](https://zephyr520.github.io/zephyr/music.html)
