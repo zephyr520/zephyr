@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>超简陋播放器</title>
+  <script src="http://his-beta.huawei.com/aurora/runtime/vue.js"></script>
+  <style>
+  #app {
+    position: relative;
+    /*width: fit-content;*/
+  }
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+  }
+  .list li {
+    list-style: decimal-leading-zero;
+    width: 250px;
+    margin-left: 45px;
+  }
+
+  .list .name {
+    /* white-space: nowrap; */
+  }
+
+  .list .name:hover {
+    cursor: pointer;
+    background-color: darkseagreen;
+  }
+  .goto input {
+    width: 2rem;
+  }
+  .active {
+    list-style: decimal-leading-zero;
+    color: deeppink;
+  }
+  .player {
+    position: fixed;
+    top: 0;
+    width: 1000px;
+    height: 110px;
+    background-color: #fff;
+  }
+  .play {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <fieldset class="player">
+      <legend> {{music.name}} </legend>
+      <div class="play">
+        <audio ref="music" :src="music.url" @ended="onAudioEnded()" controls>垃圾浏览器不支持</audio>
+        <div>
+          <button @click="prePlay" title="ctrl+left">上一首</button>
+          <button @click="nextPlay" title="ctrl+right">下一首</button>
+          <button title="space">播放/暂停</button>
+          <p>
+            <span>播放方式</span>
+            <button v-if="config.type == 1" @click="config.type = 2">单曲循环</button>
+            <button v-if="config.type == 2" @click="config.type = 3">顺序播放</button>
+            <button v-if="config.type == 3" @click="config.type = 1">随机播放</button>
+          </p>
+          <!-- 每页 <input type="text" v-model="config.pageSize" @keyup.enter="onPageSizeChange()" @keyup.up="++config.pageSize;onPageSizeChange()" @keyup.down="--config.pageSize;onPageSizeChange()" title="条数：上下键增减，回车确认。">
+          <span style="margin-right: 30px;">条 </span>
+          当前第
+          <input type="text" v-model="config.page" @keyup.enter="onGoToClick()" @keyup.up="++config.page;onGoToClick()" @keyup.down="--config.page;onGoToClick()" title="翻页：上下键翻页，回车确认。">
+          <span>页 </span> -->
+        </div>
+        <div class="goto">
+          <!-- <p> {{`${config.pageSize}条/${musicList.length}/${json.length}`}} </p> -->
+          <p> 总共{{json.length}}首 </p>
+          <p>
+            <input type="text" v-model="config.search" @change="onSearchUpdate()" style="width: 8rem;" title="搜索：随关键字改变而改变。">
+            <button @click="search">搜索</button>
+          </p>
+        </div>
+      </div>
+      <!-- <div class="goto">
+        <button @click="onGoToClick()">跳转</button>
+        <button @click="onPageSizeChange()">跳转</button>
+      </div> -->
+    </fieldset>
+    <fieldset style="margin-top: 140px;">
+      <!-- <legend> {{`${config.start}/${config.end}`}} {{`[${Math.ceil(config.end/config.pageSize)}/${Math.ceil(musicList.length/config.pageSize)}]`}} </legend> -->
+      <ul class="list">
+        <li v-for="(item, index) in json" :data-key="index" :class="{active:item.name == music.name}">
+          <span class="name" @click="onAudioClick(item, index)">{{item.name}}</span>
+        </li>
+      </ul>
+    </fieldset>
+  </div>
+  <script>
+    let json = [{
+        "name": "周杰伦-彩虹.mp3",
+        "url": "http://xinsheng.huawei.com/cn/index.php?app=home&mod=Attach&act=showdataattach&savepath=2011/1112/13/&savename=4ebe09bd3b27c.mp3"
+      },
+      {
+        "name": "周杰论-简单爱.mp3",
+        "url": "http://xinsheng.huawei.com/cn/index.php?app=home&mod=Attach&act=showdataattach&savepath=2011/1112/13/&savename=4ebe0128e5f74.mp3"
+      },
+
+      {
+        "name": "周杰伦-最后的战役.mp3",
+        "url": "http://xinsheng.huawei.com/cn/index.php?app=home&mod=Attach&act=showdataattach&savepath=2011/1112/13/&savename=4ebe0197a4aa2.mp3"
+      },
+
+      {
+        "name": "周杰伦-最长的电影.mp3",
+        "url": "http://xinsheng.huawei.com/cn/index.php?app=home&mod=Attach&act=showdataattach&savepath=2011/1112/13/&savename=4ebe0837c42cf.mp3"
+      },
+
+      {
+        "name": "周杰伦-兰亭序.mp3",
+        "url": "http://xinsheng.huawei.com/cn/index.php?app=home&mod=Attach&act=showdataattach&savepath=2011/1112/13/&savename=4ebe094f7b675.mp3"
+      }
+    ]
+  </script>
+  <script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      json: [...json], // 全部
+      musicList: [...json], // 当前总列表
+      music: { //当前播放
+        name: '',
+        url: ''
+      },
+      list: [], //  当前列表
+      searchList: [],
+      curIndex: 0,
+      config: {
+        start: 0, // 起始项
+        end: 10, // 结束项
+        page: 1, //当前页
+        pageSize: 10, // 单页数量
+        search: "", // 搜索内容
+        type: 2, // 1，单曲循环 2，顺序播放 3，随机播放
+      }
+    },
+    watch: {
+      /*config: {
+        handler(val) {
+          if (val) {
+            localStorage.setItem('config', JSON.stringify(val))
+          }
+        },
+        deep: true
+      },*/
+      music(val) {
+        if (val) {
+          // localStorage.setItem('music', JSON.stringify(val))
+        }
+      },
+      "config.page"(val) {
+        if (val <= 0) {
+          this.config.page = 1;
+        }
+      }
+    },
+    mounted() {
+      /*if (localStorage.getItem("music") && localStorage.getItem("config")) {
+        // this.config = JSON.parse(localStorage.getItem("config"))
+        // this.music = JSON.parse(localStorage.getItem("music"))
+        // 过滤
+        // this.musicList = this.json.filter(item => item.name.includes(this.config.search))
+        this.play()
+      } else {
+        this.RandomPlay()
+      }*/
+      this.$refs.music.volume=0.2
+      this.music = this.musicList[this.curIndex]
+      this.play()
+      document.addEventListener('keydown', (e)=> {
+        // console.log(e.keyCode)
+        if (e.key === ' ') {
+          e.preventDefault();
+          // console.count()
+          this.$refs.music.paused ? this.$refs.music.play() : this.$refs.music.pause();
+        } else if (e.keyCode === 37 && e.ctrlKey) {
+          this.prePlay()
+        } else if (e.keyCode === 39 && e.ctrlKey) {
+          this.nextPlay()
+        }
+      })
+    },
+    methods: {
+      onAudioClick(music, index) {
+        this.curIndex = index
+        this.music = music
+        this.play()
+      },
+      /**
+       * 翻页
+       */
+      /*onGoToClick() {
+        if (!this.config.page || this.config.page < 0 || this.config.page > Math.ceil(this.musicList.length / this.config.pageSize)) {
+          alert("页数错误！");
+          return;
+        }
+        this.config.start = (this.config.page - 1) * this.config.pageSize
+        this.config.end = (this.config.page - 1) * this.config.pageSize + this.config.pageSize
+        // 边界问题
+        if (this.config.page == Math.ceil(this.musicList.length / this.config.pageSize)) {
+          this.config.end = this.musicList.length;
+        }
+        this.list = this.musicList.slice(this.config.start, this.config.end)
+        this.play()
+      },*/
+      /**
+       * 播放结束
+       */
+      onAudioEnded() {
+        switch (this.config.type) {
+          case 1:
+            this.play()
+            break;
+          case 2:
+            // let index = this.musicList.findIndex(item => item.url == this.music.url);
+            // this.music = this.musicList[++index]
+            this.music = this.musicList[++this.curIndex]
+            this.play()
+            // 边界问题： 翻页
+            /*if ((index % this.config.pageSize) == 0) {
+              ++this.config.page
+              this.onGoToClick()
+            } else {
+              // 有边界问题，直接有调用，没有的时候，才单独调用
+              this.play()
+            }*/
+            break;
+          case 3:
+            this.RandomPlay();
+            break;
+          default:
+            break;
+        }
+      },
+      /**
+       * 单页数量改变
+       */
+      /*onPageSizeChange() {
+        if (!this.config.pageSize || this.config.pageSize < 0 || this.config.pageSize > this.musicList.length) {
+          alert("参数错误！");
+          return;
+        }
+        let index = this.musicList.findIndex(item => item.url == this.music.url);
+        this.config.page = Math.ceil(index / this.config.pageSize) || 1;
+        this.config.start = this.config.pageSize * this.config.page - this.config.pageSize;
+        this.config.end = this.config.start + this.config.pageSize;
+        this.list = this.musicList.slice(this.config.start, this.config.end);
+      },*/
+      prePlay() {
+        if (this.config.type == 3) {
+          this.RandomPlay()
+        } else {
+          this.curIndex > 0 && (this.music = this.musicList[--this.curIndex], this.play())
+        }
+      },
+      nextPlay() {
+        if (this.config.type == 3) {
+          this.RandomPlay()
+        } else {
+          this.curIndex < this.musicList.length-1 && (this.music = this.musicList[++this.curIndex], this.play())
+        }
+      },
+      /*
+       * 搜索
+       */
+      onSearchUpdate() {
+        /*this.musicList = this.json.filter(item => item.name.includes(this.config.search))
+        if (!this.musicList.length) {
+          return
+        }
+        this.list = this.musicList.slice(0, this.config.pageSize)
+        this.config.page = 1;
+        this.config.start = 0;
+        this.config.end = this.config.pageSize
+        this.music = this.musicList[0]
+        this.play()*/
+        this.searchList = []
+        this.json.forEach((item, index)=> item.name.includes(this.config.search) && this.searchList.push(index))
+      },
+      search() {
+        let ind = this.searchList.indexOf(this.curIndex);
+        !this.curIndex && (this.curIndex = this.searchList[0]);
+        if (!this.searchList.length) {
+          return
+        }
+        if (this.searchList.includes(this.curIndex)) {
+          ind+1 < this.searchList.length ? (this.curIndex=this.searchList[ind+1]): (this.curIndex = this.searchList[0]);
+        } else {
+          this.curIndex = this.searchList[0]
+        }
+        // console.log(this.searchList, this.curIndex)
+        document.querySelector('.list').children[this.curIndex].scrollIntoView(false)
+        this.music = this.musicList[this.curIndex]
+      },
+      /**
+       *  随机播放
+       */
+      RandomPlay() {
+        // const index = Math.ceil(Math.random() * this.musicList.length)
+        const index = Math.ceil(Math.random() * json.length)
+        // 默认播放随机
+        this.music = this.musicList[index]
+        // 默认列表 // 坐标可能为零
+        /*this.config.page = Math.ceil(index / this.config.pageSize) || 1
+        // 边界问题： 翻页
+        if ((index % this.config.pageSize) == 0) {
+          ++this.config.page
+        }*/
+        this.onGoToClick()
+      },
+      /**
+       * 播放
+       */
+      play() {
+        try {
+          this.$nextTick(() => {
+            this.$refs.music.play();
+            document.title = this.music.name
+          })
+        } catch (error) {
+          console.log("谷歌浏览器限制了自动播放，需要手动点击！");
+          console.error(error);
+        }
+      }
+
+    }
+  })
+  /**
+    2019年1月15日
+      v1：基础搭建，勉强可用
+      v2：增加分页
+
+    2019年1月16日17:58:50
+      v3：添加条数设置、搜索过滤
+    2019年1月16日18:58:15
+      v4：配置参数存储、修复bug
+    2019年1月17日17:59:23
+      v5：支持单曲循环、顺序播放、随机播放
+    */
+  </script>
+</body>
+
+</html>
