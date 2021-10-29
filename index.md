@@ -6,6 +6,7 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 
 ### 源码解析
 [Mybatis源码解析](https://zephyr520.github.io/zephyr/mybatis/mybatis.html)
+[图解Ribbon源码](https://zephyr520.github.io/zephyr/mybatis/图解Ribbon源码.pdf)
 
 ### SpringMVC工作原理
 [SpringMVC初始化流程](https://zephyr520.github.io/zephyr/spring/springmvc-init-process.html)
