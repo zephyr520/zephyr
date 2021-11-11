@@ -11,6 +11,8 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 [图解Feign源码](https://zephyr520.github.io/zephyr/spring/图解Feign源码-Feign是如何实现声明式调⽤的.pdf)
 [⼀⼝⽓带你弄懂Synchronized锁升级优化的全流程](https://zephyr520.github.io/zephyr/spring/⼀⼝⽓带你弄懂Synchronized锁升级优化的全流 程.pdf)
 [Java代码是如何在JVM中运⾏的](https://zephyr520.github.io/zephyr/spring/ava代码是如何在JVM中运⾏的.pdf)
+[图解Zookeeper分布式锁源码](https://zephyr520.github.io/zephyr/spring/图解Zookeeper分布式锁源码-可重⼊锁的实现.pdf)
+[从JVM分代模型到垃圾回收机制](https://zephyr520.github.io/zephyr/spring/从JVM分代模型到垃圾回收机制.pdf)
 
 ### SpringMVC工作原理
 [SpringMVC初始化流程](https://zephyr520.github.io/zephyr/spring/springmvc-init-process.html)
