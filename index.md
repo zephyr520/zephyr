@@ -13,9 +13,9 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 
 [图解Feign源码](https://zephyr520.github.io/zephyr/spring/图解Feign源码-Feign是如何实现声明式调⽤的.pdf)
 
-[⼀⼝⽓带你弄懂Synchronized锁升级优化的全流程](https://zephyr520.github.io/zephyr/spring/⼀⼝⽓带你弄懂Synchronized锁升级优化的全流 程.pdf)
+[⼀⼝⽓带你弄懂Synchronized锁升级优化的全流程](https://zephyr520.github.io/zephyr/spring/⼀⼝⽓带你弄懂Synchronized锁升级优化的全流程.pdf)
 
-[Java代码是如何在JVM中运⾏的](https://zephyr520.github.io/zephyr/spring/ava代码是如何在JVM中运⾏的.pdf)
+[Java代码是如何在JVM中运⾏的](https://zephyr520.github.io/zephyr/spring/Java代码是如何在JVM中运⾏的.pdf)
 
 [图解Zookeeper分布式锁源码](https://zephyr520.github.io/zephyr/spring/图解Zookeeper分布式锁源码-可重⼊锁的实现.pdf)
 
@@ -37,3 +37,7 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 
 ### 音乐
 [音乐](https://zephyr520.github.io/zephyr/music.html)
+
+### 其他
+
+[other](https://zephyr520.github.io/zephyr/java/JVM.html)
