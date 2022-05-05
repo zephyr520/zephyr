@@ -41,3 +41,7 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 ### 其他
 
 [other](https://zephyr520.github.io/zephyr/java/JVM.html)
+
+[并发](https://zephyr520.github.io/zephyr/java/玩转Java并发编程.html)
+
+[MySQL](https://zephyr520.github.io/zephyr/java/MySQL.html)
