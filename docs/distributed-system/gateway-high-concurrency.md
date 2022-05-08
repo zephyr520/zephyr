@@ -1,7 +1,7 @@
 
 第一个是高并发，第二个是如何优化
 
-![高性能网关Zuul](/docs/distributed-system/images/gateway-high-concurrency.png)
+![高性能网关Zuul](https://zephyr520.github.io/zephyr/docs/distributed-system/images/gateway-high-concurrency.png)
 **Zuul**网关部署的是什么配置的机器，**部署32核64G，对网关路由转发的请求**，**每秒抗个小几万请求是不成问题的，几台Zuul网关机器**
 
 **每秒是1万请求，8核16G的机器部署Zuul网关，5台机器就够了**

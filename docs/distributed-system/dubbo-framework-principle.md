@@ -36,7 +36,7 @@
 
 拆分为了多个子系统之后，各个系统之间如何通过Spring Cloud服务框架来进行调用，Dubbo框架来进行调用
 
-![Dubbo核心架构原理](/docs/distributed-system/images/dubbo-framework-principle.png)
+![Dubbo核心架构原理](https://zephyr520.github.io/zephyr/docs/distributed-system/images/dubbo-framework-principle.png)
 提供接口
 
 服务注册中心：

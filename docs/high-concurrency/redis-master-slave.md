@@ -86,4 +86,4 @@ redis 的高可用架构，叫做 `failover` **故障转移**，也可以叫做�
 
 master node 在故障时，自动检测，并且将某个 slave node 自动切换为 master node 的过程，叫做主备切换。这个过程，实现了 redis 的主从架构下的高可用。
 
-后面会详细说明 redis [基于哨兵的高可用性](/docs/high-concurrency/redis-sentinel.md)。
+后面会详细说明 redis [基于哨兵的高可用性](https://zephyr520.github.io/zephyr/docs/high-concurrency/redis-sentinel.html)。

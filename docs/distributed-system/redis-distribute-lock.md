@@ -1,6 +1,6 @@
 
 面试突击第二季
-![distributed-lock](/docs/distributed-system/images/redis-distribute-lock.png)
+![distributed-lock](https://zephyr520.github.io/zephyr/docs/distributed-system/images/redis-distribute-lock.png)
 Redis分布式锁，很少自己撸，Redisson框架，他基于Redis实现了一系列的开箱即用的高级功能，比如说分布式锁
 
 引入maven依赖，他示例代码就几行

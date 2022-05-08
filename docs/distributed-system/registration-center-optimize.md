@@ -1,5 +1,5 @@
 
-![分布式注册中心](/docs/distributed-system/images/registration-center-optimize.png)
+![分布式注册中心](https://zephyr520.github.io/zephyr/docs/distributed-system/images/registration-center-optimize.png)
 #### eureka：peer-to-peer，每台机器都是高并发请求，有瓶颈
 #### zookeeper：服务上下线，全量通知其他服务，网络带宽被打满，有瓶颈
 

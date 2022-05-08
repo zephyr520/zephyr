@@ -3,8 +3,7 @@
 
 seata，github上，都会提供sample，跟dubbo，官方的同学是定义为double，spring cloud，seata都提供了sample，知道如何把分布式事务框架整合到框架里去了
 
-
-![核心交易链路](/docs/distributed-system/images/rocketmq-transaction.png)
+![核心交易链路](https://zephyr520.github.io/zephyr/docs/distributed-system/images/rocketmq-transaction.png)
 核心交易链路，分布式事务框架
 
 
